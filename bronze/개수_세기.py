@@ -1,0 +1,5 @@
+x = int(input())
+ls = list(map(int, input().split()))
+y = int(input())
+m = list(filter(lambda x : x == y, ls))
+print(len(m))
