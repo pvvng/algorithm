@@ -1,0 +1,1 @@
+print("Leading the Way to the Future" if bool(int(input())) else "YONSEI")
