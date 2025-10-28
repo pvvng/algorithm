@@ -1,8 +1,11 @@
+import sys
+input = sys.stdin.readline
+
 def in_range(cur, n, m):
   return 0 <= cur[0] < n and 0 <= cur[1] < m
 
 def sol(n, m, mp):
-  dist = [["-1"] * m for _ in range(n)]
+  dist = [[str(-1)] * m for _ in range(n)]
   visited = [[False] * m for _ in range(n)]
   dd = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
@@ -23,17 +26,10 @@ def sol(n, m, mp):
     idx += 1
     for dn, dm in dd:
       nn, nm = cn + dn, cm + dm
-      if not in_range((nn, nm), n, m):
-        continue
-      if visited[nn][nm]:
-        continue
-      visited[nn][nm] = True
-
-      if mp[nn][nm] != 0:
+      if in_range((nn, nm), n, m) and not visited[nn][nm] and mp[nn][nm] != 0:
+        visited[nn][nm] = True
         dist[nn][nm] = str(cur_move + 1)
         q.append((nn, nm, cur_move + 1))
-      else:
-        dist[nn][nm] = str(0)
 
   return dist
 
