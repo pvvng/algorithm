@@ -1,6 +1,9 @@
 import sys
 input = sys.stdin.readline
 
+# ##############################
+# ----------- dp 풀이 -----------
+# ##############################
 def permutation(iter, k):
   res = []
   path = []
@@ -59,6 +62,52 @@ def dp(A, path):
                   D[i-1][1] + A[2*p+1][2*k] + A[2*k][2*k+1])
 
   return min(D[5][0], D[5][1])
+
+A = [list(map(int, input().split())) for _ in range(12)]
+print(sol(A))
+
+# ######################################
+# ----------- dfs 백트래킹 풀이 -----------
+# ######################################
+def sol(A):
+  ans = float("inf")
+
+  for k in range(12):
+    visited = [False] * 6
+    res = dfs(A, k, visited)
+
+    if res < ans:
+      ans = res
+
+  return ans
+
+# k: 현재 편지를 받은 인물
+# visited: 특정 그룹이 편지를 받았는지 확인
+def dfs(A, k, visited):
+  p = k+1 if k % 2 == 0 else k-1
+  visited[k // 2] = True # 현재 위치 방문 처리
+
+  res = A[k][p] # k에서 p로 편지 전달
+
+  best = float("inf")
+  count = 0
+  for i in range(6):
+    if visited[i]:
+      count += 1
+      continue
+
+    n1, n2 = 2*i, 2*i+1
+    ret1 = A[p][n1] + dfs(A, n1, visited) # p -> n1 반영
+    ret2 = A[p][n2] + dfs(A, n2, visited) # p -> n2 반영
+
+    best = min(best, ret1, ret2)
+
+  visited[k // 2] = False # 백트래킹
+
+  if count == 6:
+    return res
+  
+  return res + best
 
 A = [list(map(int, input().split())) for _ in range(12)]
 print(sol(A))
