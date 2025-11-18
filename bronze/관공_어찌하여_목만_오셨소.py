@@ -1,0 +1,1 @@
+print(list(filter(lambda x : "S" in x, [input() for _ in range(int(input()))]))[0])
