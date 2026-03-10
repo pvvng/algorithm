@@ -1,0 +1,1 @@
+print("\n".join(map(str, list(map(lambda x:  2-x[0]+x[1], [tuple(map(int, input().split())) for _ in range(int(input()))])))))
